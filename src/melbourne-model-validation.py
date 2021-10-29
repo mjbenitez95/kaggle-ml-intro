@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split
 
 def main():
   # Load data
@@ -16,15 +17,18 @@ def main():
                           'YearBuilt', 'Latitude', 'Longtitude']
   X = filtered_melbourne_data[melbourne_features]
 
+  # Split data into training and validation data
+  training_X, validation_X, training_y, val_y = train_test_split(X, y, random_state = 0)
+
   # Define model
   melbourne_model = DecisionTreeRegressor()
 
   # Fit model
-  melbourne_model.fit(X, y)
+  melbourne_model.fit(training_X, training_y)
 
   # calculate the mean absolute error
-  predicted_home_prices = melbourne_model.predict(X)
-  mae = mean_absolute_error(y, predicted_home_prices)
+  predicted_home_prices = melbourne_model.predict(validation_X)
+  mae = mean_absolute_error(val_y, predicted_home_prices)
   print(mae)
 
 if __name__ == "__main__":
