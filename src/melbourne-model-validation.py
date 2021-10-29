@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
@@ -37,6 +38,10 @@ def main():
   for max_nodes in range(100, 1000, 10):
     mean_absolute_error = get_mae(max_nodes, training_X, validation_X, training_y, validation_y)
     mean_absolute_errors_by_nodes[max_nodes] = mean_absolute_error
+
+  # plot data
+  plt.plot(mean_absolute_errors_by_nodes.keys(), mean_absolute_errors_by_nodes.values())
+  plt.show()
 
   # find best fit
   min_key, min_value = get_mins_in_map(mean_absolute_errors_by_nodes)
